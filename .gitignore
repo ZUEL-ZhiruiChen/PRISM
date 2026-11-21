@@ -1,0 +1,12 @@
+data/
+experiment_runs/prism_main_experiment/data/
+experiment_runs/prism_main_experiment/cache/
+experiment_runs/prism_main_experiment/results/
+experiment_runs/prism_main_experiment/comparison/
+outputs/
+result/
+*.pt
+*.pth
+*.log
+__pycache__/
+*.pyc

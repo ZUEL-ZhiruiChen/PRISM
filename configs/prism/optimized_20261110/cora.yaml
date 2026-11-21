@@ -1,0 +1,77 @@
+# Validation-selected PRISM configuration from the 2026-11-10 optimization study.
+# Required variant: prism+soft_hg (pass explicitly; the variant field below is documentation).
+# Run: python run_node.py --config configs/prism/optimized_20261110/cora.yaml --variant prism+soft_hg
+dataset:
+  name: cora
+  type: citation
+  data_dir: data/raw/cora
+  train_per_class: 20
+  val_size: 500
+  test_size: 1000
+model:
+  model_type: prism
+  dual_branch: true
+  hidden_dim: 128
+  proj_dim: 64
+  K: 3
+  dropout: 0.5
+  hop_k: 2
+  structural_cap: 32
+  structural_candidate_cap: 32
+  structure_filter: true
+  densify_k: 1
+  densify_min_similarity: 0.3
+  hyperedge_keep_ratio: 0.95
+  hyperedge_score: coherence_coverage
+  preserve_node_coverage: true
+  knn_k: 10
+  n_clusters: 32
+  enabled_views:
+  - structural
+  - feature_knn
+  - prototype
+  gate_temperature: 2.0
+  gate_residual: 0.15
+  gate_mode: soft
+  fusion_mode: embedding
+  view_gate_prior:
+    structural: 0.45
+    feature_knn: 0.35
+    prototype: 0.2
+  prototype_method: kmeans
+  prototype_soft_topk: 2
+  private_gate_strength: 0.5
+loss:
+  lambda_align: 0.03
+  lambda_var: 0.005
+  lambda_decorrelation: 0.005
+  lambda_elastic: 0.0
+  lambda_view_ce: 0.0
+  variance_gamma: 1.0
+  elastic_margin: 0.12
+  max_elastic_pairs: 8000
+  distill_enabled: true
+  distill_warmup_epochs: 5
+  distill_temperature: 1.0
+optim:
+  lr: 0.003
+  weight_decay: 0.0005
+train:
+  epochs: 100
+  patience: 25
+  grad_clip: 5.0
+  selection: val
+  save_training_history: true
+  save_routing_diagnostics: false
+seed: 8
+seeds: &id001
+- 8
+- 9
+- 10
+variant: prism+soft_hg
+optimization_record:
+  selected_candidate: c1
+  private_gate_strength: 0.5
+  structure_filter: true
+  selection: validation only
+  final_split_seeds: *id001
